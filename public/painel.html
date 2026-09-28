@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cronômetro — Câmara Municipal de Parnamirim</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="panel-page">
+  <main class="panel">
+    <header class="panel-header">
+      <img src="/logo.png" alt="Câmara Municipal de Parnamirim" class="logo">
+      <div class="institution">
+        <div class="institution-name">CÂMARA MUNICIPAL DE PARNAMIRIM</div>
+        <div class="institution-subtitle">CRONÔMETRO</div>
+      </div>
+      <div class="connection" id="connection">
+        <span class="connection-dot"></span>
+        <span id="connectionText">CONECTANDO...</span>
+      </div>
+    </header>
+
+    <section class="timer-area">
+      <div class="status" id="status">AGUARDANDO</div>
+      <div class="timer" id="timer">00:00:00</div>
+    </section>
+
+    <footer class="panel-footer">
+      <button id="fullscreenBtn" class="fullscreen-btn">⛶ TELA CHEIA</button>
+    </footer>
+  </main>
+
+  <script src="/painel.js"></script>
+</body>
+</html>

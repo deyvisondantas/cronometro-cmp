@@ -1,0 +1,9 @@
+services:
+  cronometro-cmp:
+    build: .
+    container_name: cronometro-cmp
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./timer-state.json:/app/timer-state.json

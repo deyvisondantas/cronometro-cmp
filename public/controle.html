@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle do Cronômetro — CMP</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="control-page">
+  <main class="control-shell">
+    <header class="control-header">
+      <img src="/logo.png" alt="Câmara Municipal de Parnamirim" class="control-logo">
+      <div>
+        <h1>Controle do Cronômetro</h1>
+        <p>Câmara Municipal de Parnamirim/RN</p>
+      </div>
+      <div class="connection" id="connection">
+        <span class="connection-dot"></span>
+        <span id="connectionText">CONECTANDO...</span>
+      </div>
+    </header>
+
+    <section class="control-card">
+      <div class="control-status">
+        <span>STATUS</span>
+        <strong id="status">AGUARDANDO</strong>
+      </div>
+
+      <div class="big-control-timer" id="timer">00:00:00</div>
+
+      <section class="time-config">
+        <h2>Definir tempo</h2>
+        <div class="time-fields">
+          <label>
+            Horas
+            <input id="hours" type="number" min="0" max="99" value="0">
+          </label>
+          <label>
+            Minutos
+            <input id="minutes" type="number" min="0" max="59" value="0">
+          </label>
+          <label>
+            Segundos
+            <input id="seconds" type="number" min="0" max="59" value="0">
+          </label>
+        </div>
+        <button id="setTime" class="btn btn-secondary">APLICAR TEMPO</button>
+      </section>
+
+      <section class="actions">
+        <button id="start" class="btn btn-start">▶ INICIAR</button>
+        <button id="pause" class="btn btn-warning">Ⅱ PAUSAR</button>
+        <button id="continue" class="btn btn-primary">▶ CONTINUAR</button>
+        <button id="stop" class="btn btn-danger">■ PARAR</button>
+        <button id="reset" class="btn btn-reset">↻ ZERAR</button>
+      </section>
+
+      <div class="help">
+        O servidor é responsável pela contagem. O painel pode estar em outro computador da rede.
+      </div>
+    </section>
+  </main>
+
+  <script src="/controle.js"></script>
+</body>
+</html>
