@@ -5,7 +5,7 @@ const fs = require("fs");
 const path = require("path");
 
 const PORT = process.env.PORT || 3000;
-const APP_VERSION = "1.0.2";
+const APP_VERSION = "1.0.5";
 const DATA_FILE = path.join(__dirname, "timer-state.json");
 
 const app = express();
@@ -121,6 +121,50 @@ function setTime(hours, minutes, seconds) {
     remainingMs: durationMs,
     startedAt: null,
     endAt: null
+  });
+}
+
+function addTime(hours, minutes, seconds) {
+  const h = Math.min(99, Math.max(0, Number(hours) || 0));
+  const m = Math.min(59, Math.max(0, Number(minutes) || 0));
+  const sec = Math.min(59, Math.max(0, Number(seconds) || 0));
+  const amountMs = (h * 60 * 60 + m * 60 + sec) * 1000;
+
+  if (amountMs <= 0) return;
+
+  normalizeState();
+
+  const now = Date.now();
+  const current = currentRemainingMs();
+
+  // A duração configurada também é ampliada para que um eventual
+  // próximo reset mantenha o novo tempo total.
+  const newDurationMs = Math.max(0, state.durationMs || 0) + amountMs;
+
+  if (state.status === "running") {
+    setState({
+      durationMs: newDurationMs,
+      remainingMs: current + amountMs,
+      endAt: now + current + amountMs
+    });
+    return;
+  }
+
+  if (state.status === "finished") {
+    // Se o tempo já terminou, o acréscimo deixa o cronômetro pausado
+    // com o novo tempo disponível para continuar.
+    setState({
+      status: "paused",
+      durationMs: newDurationMs,
+      remainingMs: amountMs,
+      endAt: null
+    });
+    return;
+  }
+
+  setState({
+    durationMs: newDurationMs,
+    remainingMs: current + amountMs
   });
 }
 
@@ -252,6 +296,10 @@ wss.on("connection", (ws) => {
 
         case "set_time":
           setTime(message.hours, message.minutes, message.seconds);
+          break;
+
+        case "add_time":
+          addTime(message.hours, message.minutes, message.seconds);
           break;
 
         case "start":

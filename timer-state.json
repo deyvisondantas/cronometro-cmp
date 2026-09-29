@@ -1,8 +1,8 @@
 {
-  "status": "idle",
-  "durationMs": 0,
-  "remainingMs": 0,
-  "startedAt": null,
-  "endAt": null,
-  "updatedAt": 0
+  "status": "running",
+  "durationMs": 180000,
+  "remainingMs": 180000,
+  "startedAt": 1790698693856,
+  "endAt": 1790698873856,
+  "updatedAt": 1790698693856
 }

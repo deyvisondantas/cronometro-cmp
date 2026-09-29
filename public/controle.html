@@ -28,24 +28,53 @@
 
       <div class="big-control-timer" id="timer">00:00:00</div>
 
-      <section class="time-config">
-        <h2>Definir tempo</h2>
-        <div class="time-fields">
-          <label>
-            Horas
-            <input id="hours" type="number" min="0" max="99" value="0">
-          </label>
-          <label>
-            Minutos
-            <input id="minutes" type="number" min="0" max="59" value="0">
-          </label>
-          <label>
-            Segundos
-            <input id="seconds" type="number" min="0" max="59" value="0">
-          </label>
-        </div>
-        <button id="setTime" class="btn btn-secondary">APLICAR TEMPO</button>
-      </section>
+      <div class="time-config-grid">
+        <section class="time-config">
+          <div class="section-heading">
+            <h2>Definir tempo</h2>
+            <span class="section-badge">SUBSTITUIR</span>
+          </div>
+          <p class="section-help">Digite o tempo. Ele será salvo automaticamente.</p>
+          <div class="time-fields">
+            <label>
+              Horas
+              <input id="hours" type="number" min="0" max="99" value="0">
+            </label>
+            <label>
+              Minutos
+              <input id="minutes" type="number" min="0" max="59" value="0">
+            </label>
+            <label>
+              Segundos
+              <input id="seconds" type="number" min="0" max="59" value="0">
+            </label>
+          </div>
+          <div id="saveIndicator" class="save-indicator" aria-live="polite">Tempo salvo automaticamente</div>
+        </section>
+
+        <section class="time-config add-time-section">
+          <div class="section-heading">
+            <h2>Adicionar tempo</h2>
+            <span class="section-badge section-badge-blue">SOMAR</span>
+          </div>
+          <p class="section-help">Some tempo ao que já está em andamento, sem reiniciar.</p>
+          <div class="time-fields">
+            <label>
+              Horas
+              <input id="addHours" type="number" min="0" max="99" value="0">
+            </label>
+            <label>
+              Minutos
+              <input id="addMinutes" type="number" min="0" max="59" value="0">
+            </label>
+            <label>
+              Segundos
+              <input id="addSeconds" type="number" min="0" max="59" value="0">
+            </label>
+          </div>
+          <button id="addTime" class="btn btn-primary">＋ ADICIONAR TEMPO</button>
+        </section>
+      </div>
 
       <section class="actions">
         <button id="start" class="btn btn-start">▶ INICIAR</button>
@@ -54,6 +83,7 @@
         <button id="stop" class="btn btn-danger">■ PARAR</button>
         <button id="reset" class="btn btn-reset">↻ ZERAR</button>
       </section>
+
 
       <div class="help">
         O servidor é responsável pela contagem. O painel pode estar em outro computador da rede.

@@ -6,10 +6,15 @@ const timerEl = document.getElementById("timer");
 const statusEl = document.getElementById("status");
 const connectionEl = document.getElementById("connection");
 const connectionText = document.getElementById("connectionText");
+const saveIndicatorEl = document.getElementById("saveIndicator");
 
 const hoursEl = document.getElementById("hours");
 const minutesEl = document.getElementById("minutes");
 const secondsEl = document.getElementById("seconds");
+
+const addHoursEl = document.getElementById("addHours");
+const addMinutesEl = document.getElementById("addMinutes");
+const addSecondsEl = document.getElementById("addSeconds");
 
 const STATUS_LABELS = {
   idle: "AGUARDANDO",
@@ -42,11 +47,30 @@ function getRemaining() {
   return Math.max(0, timerState.remainingMs || 0);
 }
 
+function setConfiguredTimeFields(durationMs) {
+  const totalSeconds = Math.max(0, Math.floor((durationMs || 0) / 1000));
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  hoursEl.value = hours;
+  minutesEl.value = minutes;
+  secondsEl.value = seconds;
+}
+
 function render() {
   if (!timerState) return;
 
   timerEl.textContent = formatTime(getRemaining());
   statusEl.textContent = STATUS_LABELS[timerState.status] || "AGUARDANDO";
+
+  // Não sobrescreve o campo que o operador está editando.
+  // Isso permite alterar horas, minutos e segundos normalmente.
+  const active = document.activeElement;
+  const editingConfiguredTime = [hoursEl, minutesEl, secondsEl].includes(active);
+  if (!editingConfiguredTime) {
+    setConfiguredTimeFields(timerState.durationMs);
+  }
 }
 
 function connect() {
@@ -101,8 +125,10 @@ function send(type, extra = {}) {
   socket.send(JSON.stringify({ type, ...extra }));
 }
 
-document.getElementById("setTime").addEventListener("click", () => {
-  const hours = Math.max(0, Number(hoursEl.value) || 0);
+let saveIndicatorTimer = null;
+
+function saveConfiguredTime() {
+  const hours = Math.min(99, Math.max(0, Number(hoursEl.value) || 0));
   const minutes = Math.min(59, Math.max(0, Number(minutesEl.value) || 0));
   const seconds = Math.min(59, Math.max(0, Number(secondsEl.value) || 0));
 
@@ -110,7 +136,64 @@ document.getElementById("setTime").addEventListener("click", () => {
   minutesEl.value = minutes;
   secondsEl.value = seconds;
 
+  if (saveIndicatorEl) {
+    saveIndicatorEl.textContent = "Salvando...";
+    saveIndicatorEl.classList.remove("saved");
+  }
+
   send("set_time", { hours, minutes, seconds });
+
+  if (saveIndicatorTimer) clearTimeout(saveIndicatorTimer);
+  saveIndicatorTimer = setTimeout(() => {
+    if (saveIndicatorEl) {
+      saveIndicatorEl.textContent = "✓ Tempo salvo";
+      saveIndicatorEl.classList.add("saved");
+    }
+  }, 250);
+}
+
+let setTimeDebounce = null;
+
+function scheduleSaveConfiguredTime() {
+  if (setTimeDebounce) clearTimeout(setTimeDebounce);
+  setTimeDebounce = setTimeout(saveConfiguredTime, 500);
+}
+
+[hoursEl, minutesEl, secondsEl].forEach((input) => {
+  // Salva automaticamente, mas o render() não sobrescreve o campo que está
+  // sendo digitado. Assim é possível alterar os três campos normalmente.
+  input.addEventListener("input", scheduleSaveConfiguredTime);
+  input.addEventListener("change", () => {
+    if (setTimeDebounce) clearTimeout(setTimeDebounce);
+    saveConfiguredTime();
+  });
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      if (setTimeDebounce) clearTimeout(setTimeDebounce);
+      saveConfiguredTime();
+      input.blur();
+    }
+  });
+});
+
+document.getElementById("addTime").addEventListener("click", () => {
+  const hours = Math.min(99, Math.max(0, Number(addHoursEl.value) || 0));
+  const minutes = Math.min(59, Math.max(0, Number(addMinutesEl.value) || 0));
+  const seconds = Math.min(59, Math.max(0, Number(addSecondsEl.value) || 0));
+
+  addHoursEl.value = hours;
+  addMinutesEl.value = minutes;
+  addSecondsEl.value = seconds;
+
+  const totalMs = (hours * 60 * 60 + minutes * 60 + seconds) * 1000;
+
+  if (totalMs <= 0) {
+    alert("Informe um tempo maior que zero para adicionar.");
+    return;
+  }
+
+  send("add_time", { hours, minutes, seconds });
 });
 
 document.getElementById("start").addEventListener("click", () => {
