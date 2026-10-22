@@ -61,8 +61,11 @@ function setConfiguredTimeFields(durationMs) {
 function render() {
   if (!timerState) return;
 
-  timerEl.textContent = formatTime(getRemaining());
+  const remaining = getRemaining();
+  timerEl.textContent = formatTime(remaining);
   statusEl.textContent = STATUS_LABELS[timerState.status] || "AGUARDANDO";
+  document.body.dataset.warning = remaining > 0 && remaining <= 30000 ? "true" : "false";
+  document.body.dataset.critical = remaining > 0 && remaining <= 10000 ? "true" : "false";
 
   // Não sobrescreve o campo que o operador está editando.
   // Isso permite alterar horas, minutos e segundos normalmente.

@@ -49,6 +49,8 @@ function render() {
   statusEl.textContent = STATUS_LABELS[timerState.status] || "AGUARDANDO";
 
   document.body.dataset.status = timerState.status;
+  document.body.dataset.warning = remaining > 0 && remaining <= 30000 ? "true" : "false";
+  document.body.dataset.critical = remaining > 0 && remaining <= 10000 ? "true" : "false";
 
   if (timerState.status === "running" && remaining <= 0) {
     timerState.status = "finished";

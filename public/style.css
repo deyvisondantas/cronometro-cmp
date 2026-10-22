@@ -144,6 +144,21 @@ body {
   color: var(--red);
 }
 
+/* Alertas visuais da contagem regressiva: vermelho nos últimos 30s e piscando nos últimos 10s. */
+.panel-page[data-warning="true"] .timer,
+.control-page[data-warning="true"] .big-control-timer {
+  color: var(--red);
+}
+
+.panel-page[data-critical="true"] .timer,
+.control-page[data-critical="true"] .big-control-timer {
+  animation: timer-critical-blink 0.8s steps(2, start) infinite;
+}
+
+@keyframes timer-critical-blink {
+  to { visibility: hidden; }
+}
+
 .panel-footer {
   display: flex;
   justify-content: center;
