@@ -87,7 +87,7 @@ Retoma a contagem a partir do tempo restante.
 
 Interrompe a contagem e mantém o estado parado.
 
-### Zerar
+### Reiniciar
 
 Zera o cronômetro e retorna ao estado inicial.
 
