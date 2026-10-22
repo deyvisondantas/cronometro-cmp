@@ -8,6 +8,6 @@ RUN npm install --omit=dev
 COPY server.js ./
 COPY public ./public
 
-EXPOSE 3000
+EXPOSE 3030
 
 CMD ["npm", "start"]

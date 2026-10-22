@@ -4,7 +4,7 @@ const WebSocket = require("ws");
 const fs = require("fs");
 const path = require("path");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3030;
 const APP_VERSION = "1.0.5";
 const DATA_FILE = path.join(__dirname, "timer-state.json");
 

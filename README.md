@@ -117,13 +117,13 @@ Com o servidor executando na máquina local:
 ### Painel público
 
 ```text
-http://localhost:3000/painel.html
+http://localhost:3030/painel.html
 ```
 
 ### Controle
 
 ```text
-http://localhost:3000/controle.html
+http://localhost:3030/controle.html
 ```
 
 Em outro computador da mesma rede, substitua `localhost` pelo IP do computador que está executando o servidor.
@@ -131,8 +131,8 @@ Em outro computador da mesma rede, substitua `localhost` pelo IP do computador q
 Exemplo:
 
 ```text
-http://192.168.1.100:3000/painel.html
-http://192.168.1.100:3000/controle.html
+http://192.168.1.100:3030/painel.html
+http://192.168.1.100:3030/controle.html
 ```
 
 ## ▶️ Executar com Node.js
@@ -151,7 +151,7 @@ Inicie o servidor:
 npm start
 ```
 
-O servidor ficará disponível na porta `3000`.
+O servidor ficará disponível na porta `3030`.
 
 ## 🐳 Executar com Docker Compose
 
@@ -188,7 +188,7 @@ docker compose up -d
 A aplicação possui um endpoint de saúde:
 
 ```text
-http://localhost:3000/api/health
+http://localhost:3030/api/health
 ```
 
 Na versão 1.0.4, a resposta esperada é semelhante a:
@@ -220,8 +220,8 @@ Exemplo:
 Nesse caso, os endereços serão:
 
 ```text
-http://192.168.1.100:3000/painel.html
-http://192.168.1.100:3000/controle.html
+http://192.168.1.100:3030/painel.html
+http://192.168.1.100:3030/controle.html
 ```
 
 ## 🏗️ Arquitetura
