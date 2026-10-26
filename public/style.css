@@ -482,3 +482,49 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* Botão para abrir o painel no canto superior direito */
+.btn-abrir-painel {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  z-index: 9999;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 12px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9px;
+
+  background: var(--navy);
+  color: #fff;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(16, 44, 58, 0.2);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-abrir-painel:hover {
+  background: var(--blue);
+  transform: translateY(-1px);
+}
+
+.btn-abrir-painel:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+@media (max-width: 450px) {
+  .btn-abrir-painel {
+    top: 10px;
+    right: 10px;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}
